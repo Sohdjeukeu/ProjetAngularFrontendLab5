@@ -1,0 +1,22 @@
+.login-container{
+  margin: auto;
+  width: 50%;
+  height: 300px;
+  background: sandybrown;
+  .input-container{
+    margin: auto;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    label, button{
+      cursor: pointer;
+    }
+    input{
+      outline: none;
+    }
+    p{
+      color: red;
+    }
+  }
+}

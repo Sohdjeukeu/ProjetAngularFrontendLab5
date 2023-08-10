@@ -1,0 +1,60 @@
+<div class="add-new-user-modal-view-container">
+  <div class="add-etat-de-salaire-modal-view" id="popup">
+
+    <div class="overlay"></div>
+
+    <div class="modal-view-container">
+
+      <h3><!--Ajouter un nouvel client--></h3>
+
+      <form (ngSubmit)="onSubmit(newUserForm)" #newUserForm="ngForm">
+
+        <div class="input-container">
+
+          <div>
+            <label for="nom">Nom</label>
+            <input type="text" name="nom" id="nom" [(ngModel)]="this.user.NOM" />
+          </div>
+
+          <div>
+            <label for="prenom">Prénom</label>
+            <input type="text" name="prenom" id="prenom" [(ngModel)]="this.user.PRENOM"/>
+          </div>
+
+          <div>
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" [(ngModel)]="this.user.EMAIL"/>
+          </div>
+
+        </div>
+
+        <h3 *ngIf="this.rolesList.length > 0"> <!--Roles utilisateur--> </h3>
+
+        <div class="role-utilisateur-container">
+          <div class="block" *ngFor="let role of rolesList">
+            <div class="flex">
+              <label [for]="role.ID_ROLE">{{ role.DESCRIPTION_ROLE }}</label>
+              <input class="checkbox"
+                type="checkbox"
+                [name]="role.ID_ROLE"
+                [id]="role.ID_ROLE"
+                [checked]="this.typeRole === 'clientsResidentiels' || this.typeRole === 'clientsResidentiels'"
+                [disabled]="this.typeRole === 'clientsResidentiels' || this.typeRole === 'clientsResidentiels'"
+                (change)="this.addRemoveRole(role, $event)" />
+            </div>
+          </div>
+        </div>
+
+        <div class="button-container">
+          <input type="button" value="Fermer" (click)="closeAddNewUserModal()"/>
+          <input type="submit" value="Enregistrer" />
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+</div>

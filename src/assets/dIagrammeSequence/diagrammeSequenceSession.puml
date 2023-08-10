@@ -1,0 +1,37 @@
+@startuml Sécurité système
+title Diagramme de séquence pour l'authentification
+skinparam style strictuml
+skinparam defaultFontname Verdana
+skinparam sequence {
+    MessageAlign center
+}
+
+actor ":Utilisateur" as user
+participant ":LoginComponent" as lg
+participant ":serviceAuthentification" as sau
+participant ":Base De Donnees \n MySQL" as bd
+participant ":Administrateur" as ad
+
+user -> lg:EnvoyerRequeteAuthentifier()
+activate lg
+activate user
+sau <- lg : authentifierUtilisateur()
+activate sau
+
+  sau-> bd: utilisateur.findOne()
+  sau<-- bd  : User_id, email, motPasse haché
+  sau --> sau : compareStringMotPasse()
+alt authentification ok
+  lg <-- sau: authentification ok
+  user <-- lg: Ouverture de la session
+else
+  lg <-- sau: authentification a échoué
+  lg --> user : il vous reste deux tentatives
+  user -> lg: reauthentifier()
+  lg --> user: compte bloqué contacté l'administrateur
+  user -> ad : Merci de bien vouloir débloquer mon compte
+end
+
+deactivate lg
+
+@enduml

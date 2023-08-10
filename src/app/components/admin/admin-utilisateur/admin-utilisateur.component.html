@@ -1,0 +1,55 @@
+<div class="admin-utilisateur-container">
+  <div class="table-container">
+    <h3>Liste des utilisateurs</h3>
+    <div class="add-user-container">
+      <button title="Cliquer pour ajouter un nouvelle utilisateur" (click)="this.openAddUserModal()">+</button>
+    </div>
+    <table class="styled-table" *ngIf="this.usersList.length > 0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>NOM</th>
+          <th>PRENOM</th>
+          <th>EMAIL</th>
+          <th>STATUT</th>
+          <th>MODIFICATION</th>
+          <!-- <th>SUPPRESSION</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of usersList">
+          <td>{{ user.ID_USER }}</td>
+          <td>{{ user.NOM }}</td>
+          <td>{{ user.PRENOM }}</td>
+          <td>{{ user.EMAIL }}</td>
+          <td>
+            <input type="checkbox" [checked]="user.IS_LOCK ? true : false" (click)="cancelAction($event)" />
+          </td>
+          <td>
+            <button class="update" (click)="this.openUpdateUserModal(user)">Modifier</button>
+          </td>
+          <!-- <td>
+            <button class="delete" (click)="this.deleteUser(user)">Supprimer</button>
+          </td> -->
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 *ngIf="this.usersList.length <= 0">Aucune donnée trouvée</h3>
+  </div>
+</div>
+
+<!-- Composant utilisateur -->
+<app-add-new-user
+  *ngIf="this.showAddNewUserPanel === true"
+  (closeModal)="closeAddUserModal()"
+  >
+</app-add-new-user>
+
+
+<app-update-user
+  *ngIf="this.showUpdateNewUserPanel === true"
+  [user]="this.selectedUser"
+  (closeModal)="this.closeUpdateModal()"
+>
+</app-update-user>
